@@ -1,0 +1,24 @@
+{
+  "name": "todo-mvc",
+  "version": "0.1.0",
+  "description": "TODO using MVC pattern in Vanjilla JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sajalshres/todo-mvc-js.git"
+  },
+  "keywords": [
+    "todo",
+    "javascript",
+    "mvc"
+  ],
+  "author": "sajal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sajalshres/todo-mvc-js/issues"
+  },
+  "homepage": "https://github.com/sajalshres/todo-mvc-js#readme"
+}
