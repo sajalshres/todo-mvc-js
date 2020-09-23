@@ -1,4 +1,4 @@
-export default class Model {
+class Model {
   constructor() {
     this.todos = [
       { id: 1, name: 'Buy groceries', complete: false },
@@ -56,3 +56,5 @@ export default class Model {
     });
   }
 }
+
+export default Model;

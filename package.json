@@ -1,8 +1,7 @@
 {
   "name": "todo-mvc",
   "version": "0.1.0",
-  "description": "TODO using MVC pattern in Vanjilla JavaScript",
-  "main": "index.js",
+  "description": "TODO using MVC pattern in Vanilla JavaScript",
   "scripts": {
     "dev": "webpack --mode development",
     "start": "webpack-dev-server --mode development --open",
