@@ -1,0 +1,24 @@
+name: Deploy to github pages
+  on:
+    push:
+      branches:
+        - master
+  jobs:
+    deploy:
+      name: Deploy to gh-pages
+      runs-on: ubuntu-latest
+      steps:
+        - name: Setup Node.js for use with actions
+          uses: actions/setup-node@v1.4.3
+          with:
+            version:  14.x
+        - name: Checkout branch
+          uses: actions/checkout@v2
+
+        - name: Clean install dependencies
+          run: npm ci
+
+        - name: Deploy
+          run: |
+            git config user.name "Sajal N. Shrestha" && git config user.email "sajal.shres@gmail.com"
+            npm run deploy

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "webpack --mode development",
     "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "deploy": "node scripts/deploy.js"
   },
   "repository": {
     "type": "git",
