@@ -3,31 +3,41 @@ class View {
     // root element
     this.app = this.getElement('#app');
 
-    // title element
-    this.title = this.createElement('h1');
-    this.title.textContext = 'Todos';
-
-    // form with input and submit button
-    this.input = this.createElement('input');
+    // build form
+    this.form = this.createElement('form', 'todo-form');
+    this.input = this.createElement('input', 'todo-form__input');
     this.input.type = 'text';
     this.input.placeholder = 'Add todo';
     this.input.name = 'todo';
-
-    this.submitButton = this.createElement('button');
-    this.submitButton.textContext = 'Submit';
-
-    this.form = this.createElement('form');
+    this.submitButton = this.createElement('button', 'todo-button');
+    this.submitButton.textContent = 'Add';
     this.form.append(this.input, this.submitButton);
 
-    // todo list
+    // build header
+    this.title = this.createElement('h1', 'todo-title');
+    this.title.textContent = 'Todos';
+
+    // build todo list
     this.todoList = this.createElement('ul', 'todo-list');
 
-    // Append element, form and list to app
+    // append to root ui element
     this.app.append(this.title, this.form, this.todoList);
+
+    this.temporaryTodoName = '';
+    this.initLocalListeners();
+  }
+
+  get todoText() {
+    return this.input.value;
+  }
+
+  resetInput() {
+    this.input.value = '';
   }
 
   createElement(tag, className) {
     const element = document.createElement(tag);
+
     if (className) element.classList.add(className);
 
     return element;
@@ -39,58 +49,100 @@ class View {
     return element;
   }
 
-  get todoValue() {
-    return this.input.value;
-  }
-
-  resetInput() {
-    this.input.value = '';
-  }
-
   render(todos) {
-    // delete all nodes
+    // Delete all nodes
     while (this.todoList.firstChild) {
       this.todoList.removeChild(this.todoList.firstChild);
     }
 
-    // display default message
+    // Show default message
     if (todos.length === 0) {
-      const paragraph = this.createElement('p');
-      paragraph.textContext = 'Nothing to do! Please add a task.';
-      this.todoList.append(paragraph);
+      const p = this.createElement('p');
+      p.textContent = 'Nothing to do! Good Job 🏆';
+      this.todoList.append(p);
     } else {
-      // create todo nodes
+      // Create nodes
       todos.forEach((todo) => {
-        const list = this.createElement('li');
-        list.id = todo.id;
+        const li = this.createElement('li', 'todo-item');
+        li.id = todo.id;
 
-        const checkBox = this.createElement('input');
-        checkBox.type = 'checkbox';
-        checkBox.checked = todo.complete;
+        const checkbox = this.createElement('input', 'todo-item__checkbox');
+        checkbox.type = 'checkbox';
+        checkbox.checked = todo.status;
 
-        const span = this.createElement('span');
+        const span = this.createElement('span', 'todo-item__text');
         span.contentEditable = true;
         span.classList.add('editable');
 
-        if (todo.complete) {
+        if (todo.status) {
           const strike = this.createElement('s');
-          strike.textContext = todo.name;
+          strike.textContent = todo.name;
           span.append(strike);
         } else {
-          span.textContext = todo.name;
+          span.textContent = todo.name;
         }
 
-        const deleteButton = this.createElement('button', 'delete');
-        deleteButton.textContext = 'Delete';
-        list.append(checkBox, span, deleteButton);
+        const deleteButton = this.createElement(
+          'button',
+          'todo-button--delete'
+        );
+        deleteButton.textContent = 'Delete';
+        li.append(checkbox, span, deleteButton);
 
         // Append nodes
-        this.todoList.append(list);
+        this.todoList.append(li);
       });
     }
+  }
 
-    // log
-    console.log(todos);
+  initLocalListeners() {
+    this.todoList.addEventListener('input', (event) => {
+      if (event.target.className === 'editable') {
+        this.temporaryTodoName = event.target.innerText;
+      }
+    });
+  }
+
+  onAddTodo(handler) {
+    this.form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (this.todoText) {
+        handler(this.todoText);
+        this.resetInput();
+      }
+    });
+  }
+
+  onDeleteTodo(handler) {
+    this.todoList.addEventListener('click', (event) => {
+      if (event.target.className === 'todo-button--delete') {
+        const id = parseInt(event.target.parentElement.id);
+
+        handler(id);
+      }
+    });
+  }
+
+  onEditTodo(handler) {
+    this.todoList.addEventListener('focusout', (event) => {
+      if (this.temporaryTodoName) {
+        const id = parseInt(event.target.parentElement.id);
+
+        handler(id, this.temporaryTodoName);
+        this.temporaryTodoName = '';
+      }
+    });
+  }
+
+  onToggleTodo(handler) {
+    this.todoList.addEventListener('change', (event) => {
+      if (event.target.type === 'checkbox') {
+        const id = parseInt(event.target.parentElement.id);
+
+        handler(id);
+      }
+    });
   }
 }
 

@@ -1,59 +1,53 @@
 class Model {
   constructor() {
-    this.todos = [
-      { id: 1, name: 'Buy groceries', complete: false },
-      { id: 2, name: 'Pay bills', complete: false },
-    ];
+    this.todos = JSON.parse(localStorage.getItem('todos')) || [];
   }
 
-  nextId() {
-    let id = 1;
+  bindTodoListChanged(callback) {
+    this.onTodoListChanged = callback;
+  }
 
-    if (this.todos.length > 0) {
-      id = this.todos[this.todo.length - 1].id + 1;
-    }
-
-    return id;
+  save(todos) {
+    this.onTodoListChanged(todos);
+    localStorage.setItem('todos', JSON.stringify(todos));
   }
 
   create(todoName) {
     const todo = {
-      id: this.nextId(),
+      id: this.todos.length > 0 ? this.todos[this.todos.length - 1].id + 1 : 1,
       name: todoName,
-      complete: false,
+      status: false,
     };
 
     this.todos.push(todo);
+
+    this.save(this.todos);
   }
 
   update(id, todoName) {
-    this.todos = this.todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          id: todo.id,
-          name: todoName,
-          complete: todo.complete,
-        };
-      }
-      return todo;
-    });
+    this.todos = this.todos.map((todo) =>
+      todo.id === id
+        ? { id: todo.id, name: todoName, status: todo.status }
+        : todo
+    );
+
+    this.save(this.todos);
   }
 
   remove(id) {
     this.todos = this.todos.filter((todo) => todo.id !== id);
+
+    this.save(this.todos);
   }
 
-  toggleComplete(id) {
-    this.todos = this.todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          id: todo.id,
-          name: todo.name,
-          complete: !todo.complete,
-        };
-      }
-      return todo;
-    });
+  toggleStatus(id) {
+    this.todos = this.todos.map((todo) =>
+      todo.id === id
+        ? { id: todo.id, name: todo.name, status: !todo.status }
+        : todo
+    );
+
+    this.save(this.todos);
   }
 }
 
