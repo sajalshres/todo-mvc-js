@@ -8,7 +8,7 @@ A simple todo application using MVC pattern in vanilla JavaScript.
 
 - **View:** Includes UI logic related to the application. For exampple, adding todo item from the text input, clicking on add button, marking todo item as complete.
 
-- **Controller:**: Acts as interface between the **Model** and **View** component. For example, handling the interaction between adding a new todo in the view component and updating the database using todo model.
+- **Controller:** Acts as interface between the **Model** and **View** component. For example, handling the interaction between adding a new todo in the view component and updating the database using todo model.
 
 ## 💻 Demo
 
