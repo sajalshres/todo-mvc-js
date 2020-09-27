@@ -8,7 +8,11 @@ A simple todo application using MVC pattern in vanilla JavaScript.
 
 - **Controller:**: Acts as interface between the **Model** and **View** component. For example, handling the interaction between adding a new todo in the view component and updating the database using todo model.
 
-# ⚙ Setup
+## 💻 Demo
+
+- [Visit the demo](https://sajalshres.github.io/todo-mvc-js/)
+
+## ⚙ Setup
 
 - Install dependencies: `npm install`
 
