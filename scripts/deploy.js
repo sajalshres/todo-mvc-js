@@ -1,4 +1,3 @@
-const { exec } = require('child_process');
 const execa = require('execa');
 const fs = require('fs');
 
