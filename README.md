@@ -1,5 +1,7 @@
 # 📝 Todo Vanilla JS App
 
+[![Actions Status](https://github.com/sajalshres/todo-mvc-js/workflows/Build%20and%20Deploy/badge.svg)](https://github.com/sajalshres/todo-mvc-js/actions)
+
 A simple todo application using MVC pattern in vanilla JavaScript.
 
 - **Model:** Includes all the data-related logic. For example, retrieve, update, remove todo items from the database
